@@ -48,8 +48,17 @@
 .cont3 {
 margin-top: 30px;
 padding: 20px;
+width:90%;
 
 }
+.cont4{
+  margin-top: 30px;
+  padding: 20px;
+  width:90%;
+  margin: auto;
+  background-color: bisque;
+  
+  }
 .row{
   padding:20px;
 
@@ -61,4 +70,19 @@ padding: 20px;
 .sticky-nav {
   position: sticky;
   top: 0;
+}
+
+.col1{
+  padding: 20px;
+}
+
+.link1{
+  text-decoration: none;
+  color: #61dafb;
+}
+
+
+.link1:hover,.link1:focus{
+  background-color: #525658; 
+            color: #fff; 
 }
