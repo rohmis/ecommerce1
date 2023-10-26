@@ -85,9 +85,9 @@ function App() {
     },
     // Add the rest of your product data here
   ];
-
+  
   return (
-    <>
+    <div className="bg-img" >
       <NavBar />
       <Routes>
         <Route path="/" element={<Home products={products} />} />
@@ -97,7 +97,7 @@ function App() {
         <Route path="/AddToWishlist" element={<AddToWishlist/>}/>
       </Routes>
       <Footer/>
-    </>
+    </div>
   );
 }
 

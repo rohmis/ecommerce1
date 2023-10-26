@@ -86,9 +86,10 @@ export default function Home({ products }) {
             <Row className="row">
               {products.map((product) => (
                 <Col key={product.id} className="col1">
-                  <Card style={{ width: "18rem" }}>
+                  <Card style={{ width: "250px", height:"400px" }} className="cart-item">
                     <Card.Img
                       className="imgs1"
+                      style={{ width: "80%", height:"50%",margin:"auto",padding:"4%" }}
                       variant="top"
                       src={product.image}
                       alt={product.name}

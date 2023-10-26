@@ -23,8 +23,8 @@ export default function NavBar() {
         className="bg-body-tertiary"
         sticky="top"
       >
-        <Container fluid>
-          <Navbar.Brand href="#"  style={{ maxHeight: "100px",padding:"10px" ,marginLeft:"20px"}}>R-Mart</Navbar.Brand>
+        <Container fluid >
+  <img src="./images/image.png " style={{width:"10%",}}/>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav

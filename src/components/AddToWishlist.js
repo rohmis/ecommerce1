@@ -3,14 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, Row, Col, Container, Button, Stack } from "react-bootstrap";
 import { removeFromWishlist } from "../redux/RegisterSlice";
 
-
 export default function AddToWishlist() {
   const dispatch = useDispatch();
 
   const [showPop, setShowPop] = useState(false);
   const [showWishlist, setShowWishlist] = useState(true);
   const [product, setProduct] = useState([]);
-  const wishlist = useSelector((state) => state.user.wishlist); 
+  const wishlist = useSelector((state) => state.user.wishlist);
 
   const handleView = (item) => {
     setShowPop(true);
@@ -54,7 +53,10 @@ export default function AddToWishlist() {
           <Row className="row">
             {wishlist.map((item, index) => (
               <Col key={index} className="col1">
-                <Card style={{ width: "18rem", height: "100%" }}>
+                <Card
+                  style={{ width: "18rem", height: "100%" }}
+                  className="cart-item"
+                >
                   <Card.Img
                     className="imgs1"
                     variant="top"
@@ -110,7 +112,6 @@ export default function AddToWishlist() {
               </Col>
             ))}
           </Row>
-          
         </Container>
       )}
       {showPop && (
@@ -119,11 +120,12 @@ export default function AddToWishlist() {
             style={{
               alignItems: "center",
               width: "70%",
-              height: "500px",
+
               margin: "auto",
               marginBottom: "20px",
               padding: "20px",
             }}
+            className="cart-item"
           >
             <Card.Img
               className="imgs1"
@@ -163,7 +165,6 @@ export default function AddToWishlist() {
           </Card>
         </Container>
       )}
-     
     </div>
   );
 }

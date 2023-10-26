@@ -72,7 +72,7 @@ export default function AddToCart() {
               </Card.Header>
               {cart.map((item, index) => {
                 return (
-                  <Card.Body key={index}>
+                  <Card.Body key={index} className="cart-item">
                     <Row>
                       <Col lg="3" md="12" className="mb-4 mb-lg-0">
                         <Image
@@ -245,3 +245,5 @@ export default function AddToCart() {
     </section>
   );
 }
+
+
