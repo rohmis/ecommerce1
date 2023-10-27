@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Row, Col, Container, Button, Stack } from "react-bootstrap";
 import { removeFromWishlist } from "../redux/RegisterSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function AddToWishlist() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [showPop, setShowPop] = useState(false);
   const [showWishlist, setShowWishlist] = useState(true);
@@ -15,6 +17,7 @@ export default function AddToWishlist() {
     setShowPop(true);
     setProduct(item);
     setShowWishlist(false);
+    navigate(`/ShowProduct/${item.id}`, { state: item });
   };
   const handleBack = (item) => {
     setShowWishlist(true);
@@ -114,57 +117,7 @@ export default function AddToWishlist() {
           </Row>
         </Container>
       )}
-      {showPop && (
-        <Container>
-          <Card
-            style={{
-              alignItems: "center",
-              width: "70%",
-
-              margin: "auto",
-              marginBottom: "20px",
-              padding: "20px",
-            }}
-            className="cart-item"
-          >
-            <Card.Img
-              className="imgs1"
-              variant="top"
-              style={{
-                width: "200px",
-                height: "200px",
-                justifyContent: "center",
-              }}
-              src={product.image}
-              alt={product.name}
-            />
-            <Card.Body>
-              <Card.Title>
-                <h1>{product.name}</h1>
-              </Card.Title>
-              <Card.Text style={{ textAlign: "justify" }}>
-                {product.description}...
-              </Card.Text>
-              <Card.Text>
-                <strong>&#8377; {product.price}</strong>
-              </Card.Text>
-            </Card.Body>
-            <Stack
-              direction="horizontal"
-              gap={5}
-              style={{ alignItems: "center", margin: "auto", padding: "10px" }}
-            >
-              <Button
-                title="view details"
-                variant="primary"
-                onClick={() => handleBack()}
-              >
-                Back
-              </Button>
-            </Stack>
-          </Card>
-        </Container>
-      )}
+     
     </div>
   );
 }

@@ -4,6 +4,7 @@ const initialState = {
   userData: [],
   cart: [],
   wishlist: [],
+  logIn:true,
 };
 
 const userSlice = createSlice({
@@ -25,6 +26,7 @@ const userSlice = createSlice({
     removeFromWishlist: (state, action) => {
       state.wishlist=state.wishlist.filter((item) => item.id !== action.payload.id);
     },
+    
   },
 });
 
@@ -35,5 +37,6 @@ export default userSlice.reducer;
 
 
 
-// // To remove an item from the cart, dispatch the removeFromCart action with the item's ID
-// dispatch(removeFromCart({ id: itemIdToRemove }));
+
+
+

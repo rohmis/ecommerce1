@@ -8,75 +8,79 @@ import {
   Row,
   Col,
   Form,
+  Card,
 } from "react-bootstrap";
-import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 
-function ShowProduct({ product }) {
-  const [users, setUsers] = useState([]);
-  const [showEdit, setShowEdit] = useState(false);
-  const [show, setShow] = useState(true);
+export default function ShowProduct() {
+  const navigate=useNavigate()
+  const location = useLocation();
+  const product = location.state;
 
-
-
-  useEffect(() => {
-
-      axios
-        .get(product)
-        .then((res) => {
-          setUsers(res.data);
-        })
-        .catch((err) => console.log(err));
-    
-  }, [product]);
-
-console.log(users)
-
- 
-
-
+  const handleBack=()=>{
+    navigate('/AddToWishlist')
+  }
   return (
     <>
-      {
-        (users  ? (
-          <Container>
-            <Table striped bordered hover variant="dark">
-              <thead>
-                <tr>
-                  <th>S.No</th>
-                  <th>name</th>
-                  <th>email</th>
-                  <th>images</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user, index) => (
-                  <tr key={index}>
-                    <td>
-                      {index + 1}
-                      
-                    </td>
-                    <td>{user.title}</td>
-                    <td>{user.description}</td>
-                    <td><img src={user.image} /></td>
-                    
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Container>
-        ) : (
-          <p>No data available</p>
-        ))}
-
-   
+      <Container>
+        <Card
+          style={{
+            alignItems: "center",
+            width: "70%",
+            marginTop: "10px",
+            marginBottom: "20px",
+            margin: "auto",
+            marginBottom: "20px",
+            padding: "20px",
+          }}
+        >
+          {product && (
+            <>
+              <Card.Img
+                className="imgs1"
+                variant="top"
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  justifyContent: "center",
+                }}
+                src={product.images[0]}
+                alt={product.name}
+              />
+              <Card.Body>
+                <Card.Title>
+                  <h1>{product.name}</h1>
+                </Card.Title>
+                <Card.Text style={{ textAlign: "justify" }}>
+                  {product.description}...
+                </Card.Text>
+                <Card.Text>
+                  <strong>&#8377; {product.price}</strong>
+                </Card.Text>
+              </Card.Body>
+              <Stack
+                direction="horizontal"
+                gap={5}
+                style={{
+                  alignItems: "center",
+                  margin: "auto",
+                  padding: "10px",
+                }}
+              >
+                <Button
+                  title="view details"
+                  variant="primary"
+                  onClick={handleBack}
+                >
+                  Back
+                </Button>
+              </Stack>
+            </>
+          )}
+        </Card>
+      </Container>
     </>
   );
 }
-
-const mapStateToProps = (state) => ({
-  product: state.productData,
-});
-
-export default connect(mapStateToProps)(ShowProduct);

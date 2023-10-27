@@ -1,0 +1,99 @@
+
+Certainly! Here's your Redux Toolkit code structured in a more organized manner with Redux Persist integrated:
+
+Install the required packages:
+bash
+Copy code
+npm install @reduxjs/toolkit redux-persist
+Create your Redux slice and configure Redux Persist:
+javascript
+Copy code
+// userSlice.js
+import { createSlice } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // You can choose different storage options
+
+const initialState = {
+  userData: [],
+  cart: [],
+  wishlist: [],
+};
+
+const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    addUser: (state, action) => {
+      state.userData.push(action.payload);
+    },
+    addToCart: (state, action) => {
+      state.cart.push(action.payload);
+    },
+    addToWishlist: (state, action) => {
+      state.wishlist.push(action.payload);
+    },
+    removeFromCart: (state, action) => {
+      state.cart = state.cart.filter((item) => item.id !== action.payload.id);
+    },
+    removeFromWishlist: (state, action) => {
+      state.wishlist = state.wishlist.filter((item) => item.id !== action.payload.id);
+    },
+  },
+});
+
+export const { addUser, addToCart, addToWishlist, removeFromCart, removeFromWishlist } = userSlice.actions;
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  // Whitelist only the reducers you want to persist
+  whitelist: ['user'],
+};
+
+const persistedUserReducer = persistReducer(persistConfig, userSlice.reducer);
+
+export default persistedUserReducer;
+Configure your Redux store with the persisted reducer:
+javascript
+Copy code
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
+import persistedUserReducer from './userSlice'; // Import the persisted reducer
+import { persistStore } from 'redux-persist'; // Import persistStore
+
+const store = configureStore({
+  reducer: {
+    user: persistedUserReducer,
+    // Add other reducers as needed
+  },
+});
+
+export const persistor = persistStore(store);
+
+export default store;
+In your index.js file, wrap your app with the PersistGate component:
+javascript
+Copy code
+// index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import store, { persistor } from './store';
+import App from './App';
+
+ReactDOM.render(
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>,
+  document.getElementById('root')
+);
+Now, your state for userData, cart, and wishlist will be persisted in local storage by Redux Persist. This means that the state will be preserved even after the page is refreshed or when the user navigates away from the application. Make sure to configure Redux Persist as demonstrated above to achieve this.
+
+
+
+
+
+
