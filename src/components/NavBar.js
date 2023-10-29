@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
@@ -9,12 +9,26 @@ import { Link } from "react-router-dom";
 import { Badge, Stack } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { NavDropdown } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/RegisterSlice";
+import { login } from "../redux/RegisterSlice";
+
 
 export default function NavBar() {
   const cart = useSelector((state) => state.user.cart);
   const wishlist = useSelector((state) => state.user.wishlist);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const dispatch = useDispatch()
   // const len=cart.length
   // console.log(len)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+
+  const handleLogout=()=>{
+dispatch(logout())
+  }
   return (
     <>
       <Navbar
@@ -37,19 +51,19 @@ export default function NavBar() {
               }}
               navbarScroll
             >
-              <Link className="link1 me-3" to="/">
+              {isLoggedIn && (<Link className="link1 me-3" to="/">
                 Home
-              </Link>
+              </Link>)}
+              
 
-              <Link className="link1 me-3" to="/Login">
+             {!isLoggedIn && (<Link className="link1 me-3" to="/Login">
                 Login
-              </Link>
-              <Link className="link1 me-3" to="/Register">
+              </Link>)} 
+              {/* <Link className="link1 me-3" to="/Register">
                 Register
-              </Link>
+              </Link> */}
             </Nav>
-
-            <Stack direction="horizontal" gap={3} style={{ padding: "10px" }}>
+{isLoggedIn && (<> <Stack direction="horizontal" gap={3} style={{ padding: "10px" }}>
               <Button
                 style={{ width: "50px", height: "40px" }}
                 title="Add To Cart"
@@ -104,15 +118,16 @@ export default function NavBar() {
                 >
                   <NavDropdown.Item href="#action3">
                     <Link className="link1 me-3" to="/UserProfile">
-                     Profile
+                      Profile
                     </Link>
                   </NavDropdown.Item>
 
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action5">Logout</NavDropdown.Item>
+                  <NavDropdown.Item href="#action5"><Link to="/Login" onClick={handleLogout}>Logout</Link></NavDropdown.Item>
                 </NavDropdown>
               </i>
-            </div>
+            </div></>)}
+           
           </Navbar.Collapse>
         </Container>
       </Navbar>

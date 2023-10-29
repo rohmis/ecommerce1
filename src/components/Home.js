@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { Card, Stack, Row, Col, Carousel } from "react-bootstrap";
@@ -18,6 +18,10 @@ export default function Home({ products }) {
   const [product, setProduct] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
 
   const handleView = (item) => {
     setProduct(item);
@@ -58,7 +62,7 @@ export default function Home({ products }) {
     <> 
     <div className="cont1">
     
-      <div>
+    
         <Carousel data-bs-theme="dark">
           <Carousel.Item>
             <img className="imgs" src="./images/pro1.jpg" alt="Second slide" />
@@ -131,7 +135,7 @@ export default function Home({ products }) {
             ))}
           </Row>
         </Container>
-     </div>
+     
       
        </div>
     </>

@@ -4,7 +4,9 @@ const initialState = {
   userData: [],
   cart: [],
   wishlist: [],
-  logIn:true,
+  isLoggedIn: false,
+  isRegistered: true,
+  
 };
 
 const userSlice = createSlice({
@@ -26,17 +28,19 @@ const userSlice = createSlice({
     removeFromWishlist: (state, action) => {
       state.wishlist=state.wishlist.filter((item) => item.id !== action.payload.id);
     },
+    login: (state) => {
+      state.isLoggedIn = true;
+    },
+    logout: (state) => {
+      state.isLoggedIn = false;
+    },
+    isRegister: (state) => {
+      state.isRegistered = true;
+    },
     
   },
 });
 
-export const { addUser, addToCart, addToWishlist, removeFromCart ,removeFromWishlist} =
+export const { addUser, addToCart, addToWishlist, removeFromCart ,removeFromWishlist,login, logout,isRegister} =
   userSlice.actions;
 export default userSlice.reducer;
-
-
-
-
-
-
-

@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
+import { login } from "./redux/RegisterSlice";
 import { Route, Routes, Link } from "react-router-dom"; // Make sure to import Link for navigation
 import Home from "./components/Home";
 import ShowProduct from "./components/ShowProduct";
@@ -11,6 +12,9 @@ import Register from "./components/Register";
 import AddToWishlist from "./components/AddToWishlist";
 import Footer from "./components/Footer"
 import UserProfile from "./components/UserProfile";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { isRegister } from "./redux/RegisterSlice";
 
 
 function App() {
@@ -75,7 +79,7 @@ function App() {
         "https://images.pexels.com/photos/11116098/pexels-photo-11116098.jpeg?auto=compress&cs=tinysrgb&w=400",
       ],
     },
-  {
+    {
       id: 5,
       name: "Ring",
       price: 10999,
@@ -121,22 +125,45 @@ function App() {
       ],
     },
   ]
-  
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isRegistered = useSelector((state) => state.user.isRegistered);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate(["/Login", "/Register"]);
+    }
+  }, [ navigate]);
   return (
-    <div className="bg-img" >
+    <div className="bg-img">
       <NavBar />
+      
       <Routes>
-        <Route path="/" element={<Home products={products} />} />
+
         <Route path="/Login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
-        <Route path="/AddToCart" element={<AddToCart/>}/>
-        <Route path="/AddToWishlist" element={<AddToWishlist/>}/>
-        <Route path="/ShowProduct/:productId" element={<ShowProduct/>}/>
-        <Route path="/UserProfile" element={<UserProfile/>}/>
+        <Route path="/Register" element={<Register />}/>
+        
+        {isLoggedIn ? (
+          <>
+            <Route path="/" element={<Home products={products} />} />
+            <Route path="/AddToCart" element={<AddToCart />} />
+            <Route path="/AddToWishlist" element={<AddToWishlist />} />
+            <Route path="/ShowProduct/:productId" element={<ShowProduct />} />
+            <Route path="/UserProfile" element={<UserProfile />} />
+          </>
+        ) :null }
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   );
+
 }
 
 export default App;
+
+
+
+
+
+
+

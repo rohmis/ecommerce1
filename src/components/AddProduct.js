@@ -14,6 +14,10 @@ function AddProduct({ product }) {
   const [users,setUsers]=useState([])
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
+
+  useEffect(() => {
     axios
       .get(product)
       .then((res) => {

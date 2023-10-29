@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Button,
   Card,
@@ -19,6 +19,9 @@ import { removeFromWishlist } from "../redux/RegisterSlice";
 
 
 export default function AddToCart() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.user.cart);
@@ -56,7 +59,7 @@ export default function AddToCart() {
   };
   return (
     <section className="h-100 gradient-custom">
-      <Container className="py-5 h-100">
+      <Container className="AddToCart py-5 h-100">
         <Row className="justify-content-center my-4">
           <Col md="8">
             <Card className="mb-4">
@@ -76,7 +79,7 @@ export default function AddToCart() {
                     <Row>
                       <Col lg="3" md="12" className="mb-4 mb-lg-0">
                         <Image
-                          src={item.image}
+                          src={item.images}
                           style={{ width: "80%", height: "50%" }}
                         />
                         <a href="#!">

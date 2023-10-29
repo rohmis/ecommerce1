@@ -10,10 +10,21 @@ import {
   NavLink,
 } from "react-bootstrap";
 import { addUser } from "../redux/RegisterSlice";
+import { Link } from "react-router-dom";
+import { login } from "../redux/RegisterSlice";
+import { isRegister } from "../redux/RegisterSlice";
 
 export default function Login() {
   const userData = useSelector((state) => state.user.userData); // Assuming 'user' is the slice name
   const dispatch=useDispatch()
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
+
+// const changeLgn=()=>{
+//   // dispatch(login(true));
+//   // dispatch(isRegister(false));
+// }
 
 console.log(userData)
   const initialValues = {
@@ -22,6 +33,8 @@ console.log(userData)
     phone: "",
     password: "",
     confirmPassword: "",
+    cart:[],
+    wishlist:[],
     
   };
   const [inputValues, setInputValues] = useState(initialValues);
@@ -100,7 +113,7 @@ console.log(userData)
 
   return (
     <div>
-      <Container>
+      <Container className="rgs">
         <Row >
           <Col >
             <Card
@@ -187,7 +200,7 @@ console.log(userData)
                       </Col>
                     </Form.Group>
                   </Form>
-                  <h3>Already have an account? Sign In</h3>
+                  <h3>Already have an account? <Link to="/Login" >Sign In</Link></h3>
                 </Card.Text>
               </Card.Body>
             </Card>

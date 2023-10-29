@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Row, Col, Container, Button, Stack } from "react-bootstrap";
 import { removeFromWishlist } from "../redux/RegisterSlice";
@@ -12,6 +12,11 @@ export default function AddToWishlist() {
   const [showWishlist, setShowWishlist] = useState(true);
   const [product, setProduct] = useState([]);
   const wishlist = useSelector((state) => state.user.wishlist);
+  debugger;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
 
   const handleView = (item) => {
     setShowPop(true);
@@ -35,6 +40,7 @@ export default function AddToWishlist() {
         justifyContent: "center",
         textAlign: "center",
         marginTop: "30px",
+        marginBottom:"-200px"
       }}
     >
       {showWishlist && (
@@ -63,7 +69,7 @@ export default function AddToWishlist() {
                   <Card.Img
                     className="imgs1"
                     variant="top"
-                    src={item.image}
+                    src={item.images}
                     alt={item.name}
                     style={{
                       width: "50%",

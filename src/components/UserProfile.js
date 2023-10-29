@@ -15,6 +15,9 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export default function UserProfile() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
 //   const navigate=useNavigate()
 //   const location = useLocation();
 //   const product = location.state;
@@ -24,7 +27,7 @@ export default function UserProfile() {
 //   }
   return (
     <>
-      <Container style={{width:"60%",marginTop:'-10px',padding:'20px'}}>
+      <Container style={{width:"60%",marginTop:'-10px',padding:'20px', marginBottom:"-200px"}}>
      
           {/* {product && ( */}
             

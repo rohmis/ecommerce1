@@ -15,16 +15,21 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export default function ShowProduct() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
+
   const navigate=useNavigate()
   const location = useLocation();
   const product = location.state;
 
   const handleBack=()=>{
-    navigate('/AddToWishlist')
+    navigate(-1)
   }
   return (
     <>
-      <Container>
+      <Container className="ShowProduct">
         <Card
           style={{
             alignItems: "center",

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Container, Button } from "react-bootstrap";
 import {
   FaFacebook,
@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 
 export default function Footer() {
+
   return (
     <div className="wrapper">
       <footer className="bg-dark text-center text-white">
