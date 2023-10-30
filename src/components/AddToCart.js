@@ -55,8 +55,8 @@ export default function AddToCart() {
   };
 
   return (
-    <section className="h-100 gradient-custom">
-      <Container className="AddToCart py-5 h-100">
+    <section className="AddToCart h-100 gradient-custom">
+      <Container className=" py-5 h-100">
         <Row className="justify-content-center my-4">
           <Col md="8">
             <Card className="mb-4">

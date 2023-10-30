@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Card, Row, Col, Container, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { login, addUserProflie } from "../redux/RegisterSlice";
+import { login, addUserProflie ,clearUserProflie} from "../redux/RegisterSlice";
 
 export default function Login() {
   const userData = useSelector((state) => state.user.userData);
@@ -17,6 +17,7 @@ export default function Login() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputValues({ ...inputValues, [name]: value });
+    dispatch(clearUserProflie())
   };
 
   const handleSubmit = (e) => {
@@ -24,6 +25,7 @@ export default function Login() {
     for (const user of userData) {
       if (user.email === inputValues.email && user.password === inputValues.password) {
         dispatch(addUserProflie(user));
+        console.log(user)
         dispatch(login(true));
         navigate('/');
         setInputValues({

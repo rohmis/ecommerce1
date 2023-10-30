@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React from "react";
 import { Container, Button } from "react-bootstrap";
 import {
   FaFacebook,
@@ -47,7 +47,7 @@ export default function Footer() {
           style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
         >
           © 2020 Copyright:
-          <a className="text-white">
+          <a className="text-white" href="https://github.com/rohmis/ecommerce1">
             Rohit Mishra
           </a>
         </div>

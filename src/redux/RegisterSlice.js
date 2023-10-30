@@ -19,6 +19,9 @@ const userSlice = createSlice({
     addUserProflie: (state, action) => {
       state.userProfile.push(action.payload);
     },
+    clearUserProflie: (state) => {
+      state.userProfile=[];
+    },
     addToCart: (state, action) => {
       state.cart.push(action.payload);
     },
@@ -55,5 +58,6 @@ export const {
   logout,
   isRegister,
   addUserProflie,
+  clearUserProflie,
 } = userSlice.actions;
 export default userSlice.reducer;
