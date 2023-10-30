@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Card,
@@ -7,23 +7,19 @@ import {
   Image,
   ListGroup,
   Row,
-  Tooltip,
-  OverlayTrigger,
   Form,
   InputGroup,
   Stack,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../redux/RegisterSlice";
-import { removeFromWishlist } from "../redux/RegisterSlice";
-
 
 export default function AddToCart() {
   useEffect(() => {
     window.scrollTo(0, 0);
-}, []);
-  const dispatch = useDispatch();
+  }, []);
 
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.user.cart);
   const [itemCounts, setItemCounts] = useState({});
 
@@ -53,10 +49,11 @@ export default function AddToCart() {
     });
     return grandTotal;
   };
+
   const handleDelete = (item) => {
     dispatch(removeFromCart(item));
-    // console.log(item.id)
   };
+
   return (
     <section className="h-100 gradient-custom">
       <Container className="AddToCart py-5 h-100">
@@ -76,7 +73,7 @@ export default function AddToCart() {
               {cart.map((item, index) => {
                 return (
                   <Card.Body key={index} className="cart-item">
-                    <Row>
+                           <Row>
                       <Col lg="3" md="12" className="mb-4 mb-lg-0">
                         <Image
                           src={item.images}
@@ -133,7 +130,7 @@ export default function AddToCart() {
                           </Button>
                           <InputGroup>
                             <Form.Control
-                              value={itemCounts[item.id] || 1}
+                              defaultValue={itemCounts[item.id] || 1}
                               type="number"
                               min={0}
                               label="Quantity"
@@ -173,7 +170,7 @@ export default function AddToCart() {
                     Products
                     <span>&#8377; {calculateGrandTotal().toFixed(2)}</span>
                   </ListGroup.Item>
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center px-0">
+                   <ListGroup.Item className="d-flex justify-content-between align-items-center px-0">
                     Shipping
                     <span>Gratis</span>
                   </ListGroup.Item>
@@ -191,7 +188,7 @@ export default function AddToCart() {
                     </span>
                   </ListGroup.Item>
                 </ListGroup>
-                <Button block size="lg">
+                <Button block="true" size="lg">
                   Go to checkout
                 </Button>
               </Card.Body>
@@ -204,7 +201,7 @@ export default function AddToCart() {
                 <p className="mb-0">12.10.2020 - 14.10.2020</p>
               </Card.Body>
             </Card>
-            <Card>
+                       <Card>
               <Card.Body>
                 <p>
                   <strong>We accept</strong>
@@ -241,10 +238,10 @@ export default function AddToCart() {
                 </Row>
               </Card.Body>
             </Card>
+          
           </Col>
         </Row>
       </Container>
-  
     </section>
   );
 }

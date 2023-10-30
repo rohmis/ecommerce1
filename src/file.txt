@@ -1,99 +1,249 @@
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Image,
+  ListGroup,
+  Row,
+  Form,
+  InputGroup,
+  Stack,
+} from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { removeFromCart } from "../redux/RegisterSlice";
 
-Certainly! Here's your Redux Toolkit code structured in a more organized manner with Redux Persist integrated:
+export default function AddToCart() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-Install the required packages:
-bash
-Copy code
-npm install @reduxjs/toolkit redux-persist
-Create your Redux slice and configure Redux Persist:
-javascript
-Copy code
-// userSlice.js
-import { createSlice } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // You can choose different storage options
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.user.cart);
+  const [itemCounts, setItemCounts] = useState({});
 
-const initialState = {
-  userData: [],
-  cart: [],
-  wishlist: [],
-};
+  const handleIncrement = (itemId) => {
+    const updatedCounts = { ...itemCounts };
+    updatedCounts[itemId] = (updatedCounts[itemId] || 1) + 1;
+    setItemCounts(updatedCounts);
+  };
 
-const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    addUser: (state, action) => {
-      state.userData.push(action.payload);
-    },
-    addToCart: (state, action) => {
-      state.cart.push(action.payload);
-    },
-    addToWishlist: (state, action) => {
-      state.wishlist.push(action.payload);
-    },
-    removeFromCart: (state, action) => {
-      state.cart = state.cart.filter((item) => item.id !== action.payload.id);
-    },
-    removeFromWishlist: (state, action) => {
-      state.wishlist = state.wishlist.filter((item) => item.id !== action.payload.id);
-    },
-  },
-});
+  const handleDecrement = (itemId) => {
+    const updatedCounts = { ...itemCounts };
+    if (updatedCounts[itemId] > 0) {
+      updatedCounts[itemId] -= 1;
+      setItemCounts(updatedCounts);
+    }
+  };
 
-export const { addUser, addToCart, addToWishlist, removeFromCart, removeFromWishlist } = userSlice.actions;
+  const calculateItemPrice = (item) => {
+    const count = itemCounts[item.id] || 1;
+    return item.price * count;
+  };
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  // Whitelist only the reducers you want to persist
-  whitelist: ['user'],
-};
+  const calculateGrandTotal = () => {
+    let grandTotal = 0;
+    cart.forEach((item) => {
+      grandTotal += calculateItemPrice(item);
+    });
+    return grandTotal;
+  };
 
-const persistedUserReducer = persistReducer(persistConfig, userSlice.reducer);
+  const handleDelete = (item) => {
+    dispatch(removeFromCart(item));
+  };
 
-export default persistedUserReducer;
-Configure your Redux store with the persisted reducer:
-javascript
-Copy code
-// store.js
-import { configureStore } from '@reduxjs/toolkit';
-import persistedUserReducer from './userSlice'; // Import the persisted reducer
-import { persistStore } from 'redux-persist'; // Import persistStore
-
-const store = configureStore({
-  reducer: {
-    user: persistedUserReducer,
-    // Add other reducers as needed
-  },
-});
-
-export const persistor = persistStore(store);
-
-export default store;
-In your index.js file, wrap your app with the PersistGate component:
-javascript
-Copy code
-// index.js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import store, { persistor } from './store';
-import App from './App';
-
-ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <App />
-    </PersistGate>
-  </Provider>,
-  document.getElementById('root')
-);
-Now, your state for userData, cart, and wishlist will be persisted in local storage by Redux Persist. This means that the state will be preserved even after the page is refreshed or when the user navigates away from the application. Make sure to configure Redux Persist as demonstrated above to achieve this.
-
-
-
-
+  return (
+    <section className="h-100 gradient-custom">
+      <Container className="AddToCart py-5 h-100">
+        <Row className="justify-content-center my-4">
+          <Col md="8">
+            <Card className="mb-4">
+              <Card.Header className="py-3">
+                <Stack direction="horizontal" gap={3}>
+                  <div className="p-2" style={{ textAlign: "center" }}>
+                    <h5 className="mb-0">Cart - {cart.length} items</h5>
+                  </div>
+                  <div className="p-2 ms-auto" style={{ textAlign: "center" }}>
+                    <h3>Quantity</h3>
+                  </div>
+                </Stack>
+              </Card.Header>
+              {cart.map((item, index) => {
+                return (
+                  <Card.Body key={index} className="cart-item">
+                           <Row>
+                      <Col lg="3" md="12" className="mb-4 mb-lg-0">
+                        <Image
+                          src={item.images}
+                          style={{ width: "80%", height: "50%" }}
+                        />
+                        <a href="#!">
+                          <div
+                            className="mask"
+                            style={{
+                              backgroundColor: "rgba(251, 251, 251, 0.2)",
+                            }}
+                          ></div>
+                        </a>
+                        <Stack
+                          direction="horizontal"
+                          gap={3}
+                          style={{ marginTop: "10px" }}
+                        >
+                          <Button size="sm">
+                            <i className="material-icons">&#128156;</i>
+                          </Button>
+                          <Button size="sm" onClick={() => handleDelete(item)}>
+                            <i
+                              className="material-icons"
+                              style={{ fontSize: "25px", color: "red" }}
+                            >
+                              &#xe872;
+                            </i>
+                          </Button>
+                        </Stack>
+                      </Col>
+                      <Col lg="5" md="6" className="mb-4 mb-lg-0">
+                        <p>
+                          <strong>{item.name}</strong>
+                        </p>
+                        <p>{item.description.slice(0, 50)}...</p>
+                      </Col>
+                      <Col
+                        lg="4"
+                        md="6"
+                        className="mb-4 mb-lg-0"
+                        style={{ textAlign: "center" }}
+                      >
+                        <div
+                          className="d-flex mb-4"
+                          style={{ maxWidth: "300px" }}
+                        >
+                          <Button
+                            className="px-3 me-2"
+                            style={{ fontSize: "20px" }}
+                            onClick={() => handleDecrement(item.id)}
+                          >
+                            -
+                          </Button>
+                          <InputGroup>
+                            <Form.Control
+                              value={itemCounts[item.id] || 1}
+                              type="number"
+                              min={0}
+                              label="Quantity"
+                            />
+                          </InputGroup>
+                          <Button
+                            className="px-3 ms-2"
+                            style={{ fontSize: "20px" }}
+                            onClick={() => handleIncrement(item.id)}
+                          >
+                            +
+                          </Button>
+                        </div>
+                        <p className="text-start text-md-center">
+                          <strong>
+                            &#8377; {calculateItemPrice(item).toFixed(2)}
+                          </strong>
+                        </p>
+                      </Col>
+                    </Row>
+                    <div>
+                      <hr />
+                    </div>
+                  </Card.Body>
+                );
+              })}
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card className="mb-4">
+              <Card.Header>
+                <h5 className="mb-0">Summary</h5>
+              </Card.Header>
+              <Card.Body>
+                <ListGroup variant="flush">
+                  <ListGroup.Item className="d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Products
+                    <span>&#8377; {calculateGrandTotal().toFixed(2)}</span>
+                  </ListGroup.Item>
+                   <ListGroup.Item className="d-flex justify-content-between align-items-center px-0">
+                    Shipping
+                    <span>Gratis</span>
+                  </ListGroup.Item>
+                  <ListGroup.Item className="d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                    <div>
+                      <strong>Total amount</strong>
+                      <strong>
+                        <p className="mb-0">(including VAT)</p>
+                      </strong>
+                    </div>
+                    <span>
+                      <strong>
+                        &#8377; {calculateGrandTotal().toFixed(2)}
+                      </strong>
+                    </span>
+                  </ListGroup.Item>
+                </ListGroup>
+                <Button block={true} size="lg">
+                  Go to checkout
+                </Button>
+              </Card.Body>
+            </Card>
+            <Card className="mb-4">
+              <Card.Body>
+                <p>
+                  <strong>Expected shipping delivery</strong>
+                </p>
+                <p className="mb-0">12.10.2020 - 14.10.2020</p>
+              </Card.Body>
+            </Card>
+                       <Card>
+              <Card.Body>
+                <p>
+                  <strong>We accept</strong>
+                </p>
+                <Row>
+                  <Col className="me-2">
+                    <Image
+                      width="25px"
+                      src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                      alt="Visa"
+                    />
+                  </Col>
+                  <Col className="me-2">
+                    <Image
+                      width="25px"
+                      src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                      alt="American Express"
+                    />
+                  </Col>
+                  <Col className="me-2">
+                    <Image
+                      width="25px"
+                      src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                      alt="Mastercard"
+                    />
+                  </Col>
+                  <Col>
+                    <Image
+                      width="25px"
+                      src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.png"
+                      alt="PayPal acceptance mark"
+                    />
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Card>
+          
+          </Col>
+        </Row>
+      </Container>
+    </section>
+  );
+}
 
 

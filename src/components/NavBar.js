@@ -1,34 +1,25 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
-import { Badge, Stack } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { NavDropdown } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { Badge, Stack, NavDropdown } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/RegisterSlice";
-import { login } from "../redux/RegisterSlice";
-
+import logo from "./image.png";
 
 export default function NavBar() {
   const cart = useSelector((state) => state.user.cart);
   const wishlist = useSelector((state) => state.user.wishlist);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const dispatch = useDispatch()
-  // const len=cart.length
-  // console.log(len)
+  const dispatch = useDispatch();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
-  const handleLogout=()=>{
-dispatch(logout())
-  }
   return (
     <>
       <Navbar
@@ -39,7 +30,7 @@ dispatch(logout())
         sticky="top"
       >
         <Container fluid>
-          <img src="./images/image.png " style={{ width: "10%" }} />
+          <img src={logo} style={{ width: "10%" }} alt="logo" />
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
@@ -51,86 +42,98 @@ dispatch(logout())
               }}
               navbarScroll
             >
-              {isLoggedIn && (<Link className="link1 me-3" to="/">
-                Home
-              </Link>)}
-              
+              {isLoggedIn && (
+                <Link className="link1 me-3" to="/">
+                  Home
+                </Link>
+              )}
 
-             {!isLoggedIn && (<Link className="link1 me-3" to="/Login">
-                Login
-              </Link>)} 
-              {/* <Link className="link1 me-3" to="/Register">
-                Register
-              </Link> */}
+              {!isLoggedIn && (
+                <Link className="link1 me-3" to="/Login">
+                  Login
+                </Link>
+              )}
             </Nav>
-{isLoggedIn && (<> <Stack direction="horizontal" gap={3} style={{ padding: "10px" }}>
-              <Button
-                style={{ width: "50px", height: "40px" }}
-                title="Add To Cart"
-                variant="dark"
-              >
-                <Link className="link1 me-3" to="/AddToCart">
-                  &#128722;
-                </Link>
-              </Button>
-              <Badge
-                style={{
-                  fontSize: "10px",
-                  marginLeft: "-20px",
-                  borderRadius: "50%",
-                }}
-              >
-                {cart.length}
-              </Badge>
-              <Button
-                title="Watch List"
-                variant="dark"
-                style={{ width: "50px", height: "40px" }}
-              >
-                <Link className="link1 me-3" to="/AddToWishlist">
-                  &#128156;
-                </Link>
-              </Button>
-              <Badge
-                style={{
-                  fontSize: "10px",
-                  marginLeft: "-20px",
-                  borderRadius: "50%",
-                }}
-              >
-                {wishlist.length}
-              </Badge>
-            </Stack>
-            <div
-              style={{
-                backgroundColor: "white",
-                width: "4%",
-                height: "40px",
-                textAlign: "center",
-                borderRadius: "50%",
-              }}
-            >
-              <i className="fa fa-user" style={{ fontSize: "200%" }}>
-                <NavDropdown
-                  id="navbarScrollingDropdown"
-                  style={{ marginTop: "-12px" }}
-                  align="end"
+            {isLoggedIn && (
+              <>
+                <Stack
+                  direction="horizontal"
+                  gap={3}
+                  style={{ padding: "10px" }}
                 >
-                  <NavDropdown.Item href="#action3">
-                    <Link className="link1 me-3" to="/UserProfile">
-                      Profile
-                    </Link>
-                  </NavDropdown.Item>
-
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action5"><Link to="/Login" onClick={handleLogout}>Logout</Link></NavDropdown.Item>
-                </NavDropdown>
-              </i>
-            </div></>)}
-           
+                  <Link
+                    className="link1 me-3"
+                    style={{ fontSize: "25px" }}
+                    to="/AddToCart"
+                  >
+                    &#128722;
+                  </Link>
+                  <Badge
+                    style={{
+                      fontSize: "8px",
+                      marginLeft: "-41px",
+                      borderRadius: "50%",
+                    }}
+                  >
+                    {cart.length}
+                  </Badge>
+                  <Link
+                    className="link1 me-3"
+                    style={{ fontSize: "25px" }}
+                    to="/AddToWishlist"
+                  >
+                    &#128156;
+                  </Link>
+                  <Badge
+                    style={{
+                      fontSize: "8px",
+                      marginLeft: "-41px",
+                      borderRadius: "50%",
+                    }}
+                  >
+                    {wishlist.length}
+                  </Badge>
+                </Stack>
+                <div
+                  style={{
+                    backgroundColor: "white",
+                    width: "4%",
+                    height: "40px",
+                    textAlign: "center",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <i className="fa fa-user" style={{ fontSize: "200%" }}>
+                    <NavDropdown
+                      id="navbarScrollingDropdown"
+                      style={{ marginTop: "-12px" }}
+                      align="end"
+                    >
+                      <div style={{ fontSize: "25px", textAlign: "center" }}>
+                        <Link className="link1 me-3" to="/UserProfile">
+                          Profile
+                        </Link>
+                      </div>
+                      <NavDropdown.Divider />
+                      <div style={{ fontSize: "25px", textAlign: "center" }}>
+                        <Link
+                          to="/Login"
+                          style={{ textDecoration: "none" }}
+                          onClick={handleLogout}
+                        >
+                          Logout
+                        </Link>
+                      </div>
+                    </NavDropdown>
+                  </i>
+                </div>
+              </>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>
     </>
   );
 }
+
+          

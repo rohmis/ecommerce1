@@ -1,32 +1,21 @@
-import React, { useState, useEffect } from "react";
-import {
-  Badge,
-  Button,
-  Container,
-  Stack,
-  Table,
-  Row,
-  Col,
-  Form,
-  Card,
-} from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Button, Container, Stack, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import { useLocation } from "react-router-dom";
 
 export default function ShowProduct() {
-
   useEffect(() => {
     window.scrollTo(0, 0);
-}, []);
+  }, []);
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const location = useLocation();
   const product = location.state;
 
-  const handleBack=()=>{
-    navigate(-1)
-  }
+  const handleBack = () => {
+    navigate(-1);
+  };
   return (
     <>
       <Container className="ShowProduct">
@@ -37,7 +26,6 @@ export default function ShowProduct() {
             marginTop: "10px",
             marginBottom: "20px",
             margin: "auto",
-            marginBottom: "20px",
             padding: "20px",
           }}
         >

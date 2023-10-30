@@ -16,27 +16,27 @@ export default function Footer() {
       <footer className="bg-dark text-center text-white">
         <Container className="p-4 pb-0">
           <section className="mb-4">
-            <Button variant="primary" className="m-1" href="#!">
+            <Button variant="primary" className="m-1">
               <FaFacebook />
             </Button>
 
-            <Button variant="info" className="m-1" href="#!">
+            <Button variant="info" className="m-1">
               <FaTwitter />
             </Button>
 
-            <Button variant="danger" className="m-1" href="#!">
+            <Button variant="danger" className="m-1">
               <FaGoogle />
             </Button>
 
-            <Button variant="success" className="m-1" href="#!">
+            <Button variant="success" className="m-1">
               <FaInstagram />
             </Button>
 
-            <Button variant="primary" className="m-1" href="#!">
+            <Button variant="primary" className="m-1">
               <FaLinkedin />
             </Button>
 
-            <Button variant="warning" className="m-1" href="#!">
+            <Button variant="warning" className="m-1">
               <FaGithub />
             </Button>
           </section>
@@ -47,7 +47,7 @@ export default function Footer() {
           style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
         >
           © 2020 Copyright:
-          <a className="text-white" href="#">
+          <a className="text-white">
             Rohit Mishra
           </a>
         </div>

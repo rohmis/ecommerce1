@@ -1,83 +1,51 @@
-import React, { useState, useEffect } from "react";
-import {
-  Badge,
-  Button,
-  Container,
-  Stack,
-  Table,
-  Row,
-  Col,
-  Form,
-  Card,
-} from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import Container from 'react-bootstrap/Container';
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { useSelector } from "react-redux";
 
-import { useLocation } from "react-router-dom";
+const UserProfile = () => {
+  const userData = useSelector((state) => state.user.userProfile);
+ 
 
-export default function UserProfile() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-}, []);
-//   const navigate=useNavigate()
-//   const location = useLocation();
-//   const product = location.state;
-
-//   const handleBack=()=>{
-//     navigate('/AddToWishlist')
-//   }
   return (
-    <>
-      <Container style={{width:"60%",marginTop:'-10px',padding:'20px', marginBottom:"-200px"}}>
-     
-          {/* {product && ( */}
-            
-             
-              
-              <div className="card my-3" style={{ margin: "auto" }}>
-      <div className="card-body">
-        <div className="row">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Full Name</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">Kenneth Valdez</div>
-        </div>
-        <hr />
-        <div className="row">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Email</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">fip@jukmuh.al</div>
-        </div>
-        <hr />
-        <div className="row">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Phone</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">(239) 816-9029</div>
-        </div>
-        <hr />
-        <div className="row">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Mobile</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">(320) 380-4539</div>
-        </div>
-        <hr />
-        <div className="row">
-          <div className="col-sm-3">
-            <h6 className="mb-0">Address</h6>
-          </div>
-          <div className="col-sm-9 text-secondary">
-            Bay Area, San Francisco, CA
-          </div>
-        </div>
-      </div>
-    </div>
-              
-             
-            
-     
-      </Container>
-    </>
+    <Container  className="profile" style={{ width: "60%", marginTop: '-10px', padding: '20px' }}>
+      {/* {product && ( */}
+      <Card className="my-3" style={{ margin: "auto" }}>
+        <Card.Body>
+          <Row>
+            <Col sm={3}>
+              <h6 className="mb-0">Full Name</h6>
+            </Col>
+            <Col sm={9} className="text-secondary">{userData[0].name}</Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col sm={3}>
+              <h6 className="mb-0">Email</h6>
+            </Col>
+            <Col sm={9} className="text-secondary">{userData[0].email}</Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col sm={3}>
+              <h6 className="mb-0">Phone</h6>
+            </Col>
+            <Col sm={9} className="text-secondary">{userData[0].phone}</Col>
+          </Row>
+          <hr />
+    
+          <Row>
+            <Col sm={3}>
+              <h6 className="mb-0">Address</h6>
+            </Col>
+            <Col sm={9} className="text-secondary">Bay Area, San Francisco, CA</Col>
+          </Row>
+        </Card.Body>
+      </Card>
+      {/* )} */}
+    </Container>
   );
-}
+};
+
+export default UserProfile;

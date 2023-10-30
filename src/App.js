@@ -1,7 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
 import React, { useEffect } from "react";
-import { login } from "./redux/RegisterSlice";
 import { Route, Routes, Link } from "react-router-dom"; // Make sure to import Link for navigation
 import Home from "./components/Home";
 import ShowProduct from "./components/ShowProduct";
@@ -10,12 +9,9 @@ import NavBar from "./components/NavBar";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import AddToWishlist from "./components/AddToWishlist";
-import Footer from "./components/Footer"
+import Footer from "./components/Footer";
 import UserProfile from "./components/UserProfile";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { isRegister } from "./redux/RegisterSlice";
-
+import { ProtectedLoginRoute, ProtectedRoute } from "./ProtectedRoute";
 
 function App() {
   const products = [
@@ -124,46 +120,74 @@ function App() {
         "https://images.pexels.com/photos/105588/pexels-photo-105588.jpeg?auto=compress&cs=tinysrgb&w=400",
       ],
     },
-  ]
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const isRegistered = useSelector((state) => state.user.isRegistered);
-  const navigate = useNavigate();
+  ];
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate(["/Login", "/Register"]);
-    }
-  }, [ navigate]);
   return (
     <div className="bg-img">
       <NavBar />
-      
-      <Routes>
 
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Register" element={<Register />}/>
-        
-        {isLoggedIn ? (
-          <>
-            <Route path="/" element={<Home products={products} />} />
-            <Route path="/AddToCart" element={<AddToCart />} />
-            <Route path="/AddToWishlist" element={<AddToWishlist />} />
-            <Route path="/ShowProduct/:productId" element={<ShowProduct />} />
-            <Route path="/UserProfile" element={<UserProfile />} />
-          </>
-        ) :null }
+      <Routes>
+        <Route
+          path="/Login"
+          element={
+            <ProtectedLoginRoute>
+              <Login />
+            </ProtectedLoginRoute>
+          }
+        />
+        <Route
+          path="/Register"
+          element={
+            <ProtectedLoginRoute>
+              <Register />
+            </ProtectedLoginRoute>
+          }
+        />
+
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home products={products} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AddToCart"
+          element={
+            <ProtectedRoute>
+              <AddToCart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AddToWishlist"
+          element={
+            <ProtectedRoute>
+              <AddToWishlist />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ShowProduct/:productId"
+          element={
+            <ProtectedRoute>
+              <ShowProduct />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/UserProfile"
+          element={
+            <ProtectedRoute>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </div>
   );
-
 }
 
 export default App;
-
-
-
-
-
-
-

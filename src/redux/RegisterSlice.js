@@ -6,7 +6,7 @@ const initialState = {
   wishlist: [],
   isLoggedIn: false,
   isRegistered: true,
-  
+  userProfile: [],
 };
 
 const userSlice = createSlice({
@@ -16,6 +16,9 @@ const userSlice = createSlice({
     addUser: (state, action) => {
       state.userData.push(action.payload);
     },
+    addUserProflie: (state, action) => {
+      state.userProfile.push(action.payload);
+    },
     addToCart: (state, action) => {
       state.cart.push(action.payload);
     },
@@ -23,10 +26,12 @@ const userSlice = createSlice({
       state.wishlist.push(action.payload);
     },
     removeFromCart: (state, action) => {
-      state.cart=state.cart.filter((item) => item.id !== action.payload.id);
+      state.cart = state.cart.filter((item) => item.id !== action.payload.id);
     },
     removeFromWishlist: (state, action) => {
-      state.wishlist=state.wishlist.filter((item) => item.id !== action.payload.id);
+      state.wishlist = state.wishlist.filter(
+        (item) => item.id !== action.payload.id
+      );
     },
     login: (state) => {
       state.isLoggedIn = true;
@@ -37,10 +42,18 @@ const userSlice = createSlice({
     isRegister: (state) => {
       state.isRegistered = true;
     },
-    
   },
 });
 
-export const { addUser, addToCart, addToWishlist, removeFromCart ,removeFromWishlist,login, logout,isRegister} =
-  userSlice.actions;
+export const {
+  addUser,
+  addToCart,
+  addToWishlist,
+  removeFromCart,
+  removeFromWishlist,
+  login,
+  logout,
+  isRegister,
+  addUserProflie,
+} = userSlice.actions;
 export default userSlice.reducer;

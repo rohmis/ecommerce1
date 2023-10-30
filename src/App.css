@@ -53,6 +53,7 @@ width:90%;
   padding: 20px;
   width:90%;
   margin: auto;
+  margin-bottom: -400px;
 
   
   }
@@ -110,7 +111,7 @@ footer {
 
 }
 .cont1{
-  margin-bottom: -550px;
+  margin-bottom: -400px;
 }
 .container3{
   margin-right: 30px;
@@ -128,3 +129,13 @@ footer {
   margin-bottom: -400px;
 }
 
+.AddToCart{
+  margin-bottom: -400px;
+}
+.profile{
+  margin-bottom: -400px;
+}
+.ShowProduct{
+  margin-bottom: -400px;
+  margin-top: 20px;
+}
