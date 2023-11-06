@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToWishlist } from "../redux/RegisterSlice";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import img1 from "./pro1.jpg";
+import img2 from "./pro2.jpg";
+import img3 from "./pro3.jpg";
 
 export default function Home({ products }) {
   const navigate = useNavigate();
@@ -65,21 +68,21 @@ export default function Home({ products }) {
     
         <Carousel data-bs-theme="dark">
           <Carousel.Item>
-            <img className="imgs" src="./images/pro1.jpg" alt="Second slide" />
+            <img className="imgs" src={img1} alt="Second slide" />
             <Carousel.Caption>
               <h5>First slide label</h5>
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img className="imgs" src="./images/pro2.jpg" alt="Second slide" />
+            <img className="imgs" src={img2} alt="Second slide" />
             <Carousel.Caption>
               <h5>Second slide label</h5>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            <img className="imgs" src="./images/pro3.jpg" alt="Third slide" />
+            <img className="imgs" src={img3} alt="Third slide" />
             <Carousel.Caption>
               <h5>Third slide label</h5>
               <p>
